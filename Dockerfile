@@ -1,4 +1,4 @@
-FROM tomcat:9.0
+FROM tomcat:8.5
 MAINTAINER iamwh.cn@gmail.com
 RUN rm -rf /usr/local/tomcat/webapps/*
 COPY ./ArcFace /ArcFace
