@@ -21,9 +21,9 @@ public class FaceUtil {
     private static final String APP_ID = "HEfKQcD6gsA2nPaFxyX6wPuAtEtRDxBRSmnVmS8z2s8s";
     private static final String SDK_KEY = "CtMurZDHNxpCG4f978a612vD2JFcVHMbfdvgp7VciDj5";
     // For Linux
-    // private static final String LIB_PATH = "/ArcSoft/libs/LINUX64";
-    // private static final String APP_ID = "";
-    // private static final String SDK_KEY = "";
+    // private static final String LIB_PATH = "/ArcFace";
+    // private static final String APP_ID = "HEfKQcD6gsA2nPaFxyX6wPuAtEtRDxBRSmnVmS8z2s8s";
+    // private static final String SDK_KEY = "CtMurZDHNxpCG4f978a612vCtBgSQCUZX9zNNpNkXXPF";
 
     private final FaceEngine faceEngine;
 

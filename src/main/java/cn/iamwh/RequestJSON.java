@@ -6,7 +6,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class RequestJSON {
+    // for windows
     public static final String DATASET_BASEDIR = "C:/Users/wh/Desktop/Face/img";
+    // for linux
     // public static final String DATASET_BASEDIR = "/dataset";
 
     @JSONField(name = "type")
