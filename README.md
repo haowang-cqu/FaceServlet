@@ -21,10 +21,10 @@ docker build -t face:v1 .
 运行容器
 
 ```bash
-docker run 				\
-	--name face1 		\
-	-d 					\
-	-p 8080:8080 		\
+docker run              \
+	--name face1        \
+	-d                  \
+	-p 8080:8080        \
 	-v /dataset:/dataset\
 	face:v1
 ```
