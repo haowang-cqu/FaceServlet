@@ -17,7 +17,7 @@ import java.util.List;
 
 public class FaceUtil {
     // For Windows
-    private static final String LIB_PATH = "C:/Users/wh/Desktop/Face/FaceServlet/libs/WIN64";
+    private static final String LIB_PATH = "C:\\Users\\wh\\Desktop\\Face\\ArcFace\\libs\\WIN64";
     private static final String APP_ID = "HEfKQcD6gsA2nPaFxyX6wPuAtEtRDxBRSmnVmS8z2s8s";
     private static final String SDK_KEY = "CtMurZDHNxpCG4f978a612vD2JFcVHMbfdvgp7VciDj5";
     // For Linux
@@ -104,6 +104,20 @@ public class FaceUtil {
             System.out.println("检测出错");
         }
         return faceInfoList;
+    }
+
+    // 人脸框检测
+    public Rect getFaceRect(Path image) {
+        List<FaceInfo> faceInfoList = detect(image, "RGB");
+        if (faceInfoList.size() == 0) {
+            return null;
+        }
+        Rect rect = new Rect();
+        rect.setLeft(faceInfoList.get(0).getRect().getLeft());
+        rect.setTop(faceInfoList.get(0).getRect().getTop());
+        rect.setRight(faceInfoList.get(0).getRect().getRight());
+        rect.setBottom(faceInfoList.get(0).getRect().getBottom());
+        return rect;
     }
 
     // 人脸数量

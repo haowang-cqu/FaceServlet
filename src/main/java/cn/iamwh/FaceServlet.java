@@ -76,6 +76,16 @@ public class FaceServlet extends HttpServlet {
             case "liveIR":
                 result = faceUtil.getLiveness(imagePath, "IR");
                 break;
+            case "rect":
+                Rect rect = faceUtil.getFaceRect(imagePath);
+                if (null == rect) {
+                    result = 0;
+                    status = "no face detected";
+                } else {
+                    result = 1;
+                    responseJSON.setRect(rect);
+                }
+                break;
             default:
                 status = "wrong type";
                 break;

@@ -1,5 +1,6 @@
 package cn.iamwh;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
 
 public class ResponseJSON {
@@ -17,6 +18,9 @@ public class ResponseJSON {
 
     @JSONField(name = "result")
     private int result;
+
+    @JSONField(name = "rect")
+    private Rect rect;
 
     public ResponseJSON() {
     }
@@ -68,4 +72,16 @@ public class ResponseJSON {
         this.status = status;
     }
 
+    public Rect getRect() {
+        return rect;
+    }
+
+    public void setRect(Rect rect) {
+        this.rect = rect;
+    }
+
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
+    }
 }

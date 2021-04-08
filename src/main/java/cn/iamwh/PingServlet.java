@@ -18,7 +18,7 @@ public class PingServlet  extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         long timeMillis = System.currentTimeMillis();
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("response", "pong");
+        jsonObject.put("ping", "pong");
         jsonObject.put("time", timeMillis);
         writer.println(jsonObject.toJSONString());
     }
