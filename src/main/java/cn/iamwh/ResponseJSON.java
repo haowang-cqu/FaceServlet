@@ -4,6 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
 
 public class ResponseJSON {
+    @JSONField(name = "taskName")
+    private String taskName;
+
     @JSONField(name = "status")
     private String status;
 
@@ -26,10 +29,15 @@ public class ResponseJSON {
     }
 
     public ResponseJSON(RequestJSON requestJSON) {
+        taskName = requestJSON.getTaskName();
         type = requestJSON.getType();
         dataset = requestJSON.getDataset();
         image = requestJSON.getImage();
         result = -1;
+    }
+
+    public String getTaskName() {
+        return taskName;
     }
 
     public String getType() {
@@ -58,6 +66,10 @@ public class ResponseJSON {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 
     public void setResult(int result) {

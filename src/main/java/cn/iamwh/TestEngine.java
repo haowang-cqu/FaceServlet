@@ -14,7 +14,7 @@ public class TestEngine {
         System.out.println("性别: " + gender);
         int age = faceUtil.getAge(testImage);
         System.out.println("年龄: " + age);
-        int live = faceUtil.getLiveness(testImage, "RGB");
+        int live = faceUtil.getLive(testImage, "RGB");
         System.out.println("活体: " + live);
         Rect rect = faceUtil.getFaceRect(testImage);
         System.out.println("矩形: " + rect);

@@ -141,6 +141,7 @@ public class FaceUtil {
         List<AgeInfo> ageInfoList = new ArrayList<>();
         faceEngine.getAge(ageInfoList);
         // 返回第一个人脸的年龄
+        if (ageInfoList.size() == 0) return -2;
         return ageInfoList.get(0).getAge();
     }
 
@@ -149,9 +150,7 @@ public class FaceUtil {
         ImageInfoEx imageInfoEx = getImageInfoEx(image, "RGB");
         List<FaceInfo> faceInfoList = detect(image, "RGB");
         // 没有检测到人脸则返回 -1
-        if (faceInfoList.size() == 0) {
-            return -1;
-        }
+        if (faceInfoList.size() == 0) return -1;
         //人脸属性检测
         FunctionConfiguration configuration = new FunctionConfiguration();
         configuration.setSupportGender(true);
@@ -159,11 +158,12 @@ public class FaceUtil {
         List<GenderInfo> genderInfoList = new ArrayList<>();
         faceEngine.getGender(genderInfoList);
         // 返回第一个人脸的性别
+        if (genderInfoList.size() == 0) return -2;
         return genderInfoList.get(0).getGender();
     }
 
     // 活体
-    public int getLiveness(Path image, String mode) {
+    public int getLive(Path image, String mode) {
         faceEngine.setLivenessParam(0.5f, 0.7f);
         ImageInfoEx imageInfoEx = getImageInfoEx(image, mode);
         List<FaceInfo> faceInfoList = detect(image, mode);
@@ -177,12 +177,14 @@ public class FaceUtil {
             faceEngine.process(imageInfoEx, faceInfoList, configuration);
             List<LivenessInfo> livenessInfoList = new ArrayList<>();
             faceEngine.getLiveness(livenessInfoList);
+            if (livenessInfoList.size() == 0) return -2;
             return livenessInfoList.get(0).getLiveness();
         } else {
             configuration.setSupportIRLiveness(true);
             faceEngine.processIr(imageInfoEx, faceInfoList, configuration);
             List<IrLivenessInfo> irLivenessInfo = new ArrayList<>();
             faceEngine.getLivenessIr(irLivenessInfo);
+            if (irLivenessInfo.size() == 0) return -2;
             return irLivenessInfo.get(0).getLiveness();
         }
     }

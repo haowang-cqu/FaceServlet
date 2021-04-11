@@ -2,27 +2,23 @@ package cn.iamwh;
 
 import com.alibaba.fastjson.JSON;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @WebServlet("/face")
 public class FaceServlet extends HttpServlet {
     FaceUtil faceUtil;
-
+    Counter counter;
     @Override
-    public void init() throws ServletException {
-        System.out.println("-------init-------");
+    public void init() {
         faceUtil = new FaceUtil();
+        counter = new Counter();
+        System.out.println("INFO: init servlet OK.");
     }
 
     @Override
@@ -33,24 +29,30 @@ public class FaceServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // 读取请求内容
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(req.getInputStream(), StandardCharsets.UTF_8));
-        String line = null;
-        StringBuilder stringBuilder = new StringBuilder();
-        while ((line = bufferedReader.readLine()) != null) {
-            stringBuilder.append(line);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+            // 读取请求内容
+            StringBuilder stringBuilder = new StringBuilder();
+            InputStream inputStream = req.getInputStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+            // 解析JSON数据
+            String postBody = stringBuilder.toString();
+            RequestJSON requestJSON = JSON.parseObject(postBody, RequestJSON.class);
+            // 处理请求
+            ResponseJSON responseJSON = handle(requestJSON);
+            resp.setContentType("application/json;charset=UTF-8");
+            PrintWriter writer = resp.getWriter();
+            writer.println(JSON.toJSONString(responseJSON));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        // 解析JSON数据
-        String postBody = stringBuilder.toString();
-        RequestJSON requestJSON = JSON.parseObject(postBody, RequestJSON.class);
-        ResponseJSON responseJSON = handleRequest(requestJSON);
-        resp.setContentType("application/json;charset=UTF-8");
-        PrintWriter writer = resp.getWriter();
-        writer.println(JSON.toJSONString(responseJSON));
     }
 
-    private ResponseJSON handleRequest(RequestJSON requestJSON) {
+    private ResponseJSON handle(RequestJSON requestJSON) {
         ResponseJSON responseJSON = new ResponseJSON(requestJSON);
         int result = -1;
         String status = "OK";
@@ -71,10 +73,10 @@ public class FaceServlet extends HttpServlet {
                 result = faceUtil.getGender(imagePath);
                 break;
             case "liveRGB":
-                result = faceUtil.getLiveness(imagePath, "RGB");
+                result = faceUtil.getLive(imagePath, "RGB");
                 break;
             case "liveIR":
-                result = faceUtil.getLiveness(imagePath, "IR");
+                result = faceUtil.getLive(imagePath, "IR");
                 break;
             case "rect":
                 Rect rect = faceUtil.getFaceRect(imagePath);
@@ -90,6 +92,7 @@ public class FaceServlet extends HttpServlet {
                 status = "wrong type";
                 break;
         }
+        counter.countAddOne(requestJSON.getTaskName());
         responseJSON.setResult(result);
         responseJSON.setStatus(status);
         return responseJSON;

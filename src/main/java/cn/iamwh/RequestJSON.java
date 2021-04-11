@@ -11,6 +11,9 @@ public class RequestJSON {
     // for linux
     // public static final String DATASET_BASEDIR = "/dataset";
 
+    @JSONField(name = "taskName")
+    private String taskName;
+
     @JSONField(name = "type")
     private String type;
 
@@ -33,6 +36,10 @@ public class RequestJSON {
     public RequestJSON() {
     }
 
+    public String getTaskName() {
+        return taskName;
+    }
+
     public String getDataset() {
         return dataset;
     }
@@ -43,6 +50,10 @@ public class RequestJSON {
 
     public String getImage() {
         return image;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 
     public void setType(String type) {

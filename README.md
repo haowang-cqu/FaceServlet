@@ -80,5 +80,23 @@ pom.xml 指定该依赖项：
 </dependency>
 ```
 
+### Nginx 如何作负载均衡
 
+```nginx
+upstream  face {
+    server    10.0.4.8:18080  weight=1;
+    server    10.0.4.8:28080  weight=1;
+}
 
+server {
+    listen 80;
+    server_name face.iamwh.cn;
+    location / {
+        proxy_pass http://face;
+        proxy_redirect default;  
+        # 显示具体负载的机器的ip,X-Route-Ip随便命名
+        add_header X-Route-Ip $upstream_addr;
+        add_header X-Route-Status $upstream_status;
+    }
+}
+```
