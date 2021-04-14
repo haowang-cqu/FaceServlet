@@ -19,12 +19,17 @@ public class ProgressThread implements Runnable {
         postData.put("taskName", taskName);
         RequestBody requestBody = RequestBody.create(json, postData.toJSONString());
         String url = "http://chuadongf.vaiwan.com/userKmmy/progress";
+        String fake_api = "http://192.168.80.1:9999/progress";
         Request request = new Request.Builder()
                 .url(url)
                 .post(requestBody)
                 .build();
         try {
-            okHttpClient.newCall(request).execute();
+            Response response = okHttpClient.newCall(request).execute();
+            if (response.isSuccessful() && response.body() != null) {
+                System.out.println(response.body().string());
+            }
+            response.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

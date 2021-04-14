@@ -14,6 +14,7 @@ import java.nio.file.Path;
 public class FaceServlet extends HttpServlet {
     FaceUtil faceUtil;
     Counter counter;
+
     @Override
     public void init() {
         faceUtil = new FaceUtil();

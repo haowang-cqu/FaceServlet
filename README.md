@@ -29,6 +29,18 @@ docker run              \
 	face:v1
 ```
 
+### APP ID
+
+```
+Linux
+APP_ID:HEfKQcD6gsA2nPaFxyX6wPuAtEtRDxBRSmnVmS8z2s8s
+SDK_KEY:CtMurZDHNxpCG4f978a612vCtBgSQCUZX9zNNpNkXXPF
+
+Windows
+APP_ID:HEfKQcD6gsA2nPaFxyX6wPuAtEtRDxBRSmnVmS8z2s8s
+SDK_KEY:CtMurZDHNxpCG4f978a612vD2JFcVHMbfdvgp7VciDj5
+```
+
 ### 问题记录
 
 #### 如何把虹软 SDK 的 jar 文件打包进 web app？

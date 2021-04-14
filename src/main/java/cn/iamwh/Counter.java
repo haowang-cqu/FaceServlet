@@ -9,9 +9,9 @@ public class Counter {
         if (count.containsKey(taskName)) {
             count.put(taskName, count.get(taskName)+1);
             // 计数满 100 发送一次进度更新到后端
-            if (count.get(taskName) == 100) {
+            if (count.get(taskName) % 100 == 0) {
+                System.out.println(taskName + ": " + count.get(taskName));
                 new Thread(new ProgressThread(taskName)).start();
-                count.put(taskName, 0);
             }
         } else {
             count.put(taskName, 1);
